@@ -1,0 +1,14 @@
+{
+    "coinbase_tags" : {
+        "/sygnet/": {
+            "name": "woof",
+            "link": "https://signetfaucet.com"
+        }
+    },
+    "payout_addresses" : {
+        "tb1qsygnet2jdqm8n2p7wmmklp9yel3k7agpnycv4f": {
+            "name": "woof",
+            "link": "https://signetfaucet.com"
+        }
+    }
+}
