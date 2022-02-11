@@ -1076,38 +1076,10 @@ expressApp.use(function(req, res, next) {
 	next(err);
 });
 
-/// error handlers
-
-const sharedErrorHandler = (req, err) => {
-	if (err && err.message && err.message.includes("Not Found")) {
-		const path = err.toString().substring(err.toString().lastIndexOf(" ") + 1);
-		const userAgent = req.headers['user-agent'];
-		const crawler = utils.getCrawlerFromUserAgentString(userAgent);
-		const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress; 
-
-		const attributes = { path:path };
-
-		if (crawler) {
-			attributes.crawler = crawler;
-		}
-
-		debugErrorLog(`404 NotFound: path=${path}, ip=${ip}, userAgent=${userAgent} (crawler=${(crawler != null)}${crawler ? crawler : ""})`);
-
-		utils.logError(`NotFound`, err, attributes, false);
-
-	} else {
-		utils.logError("ExpressUncaughtError", err);
-	}
-};
-
 // development error handler
 // will print stacktrace
 if (expressApp.get("env") === "development" || expressApp.get("env") === "local") {
 	expressApp.use(function(err, req, res, next) {
-		if (err) {
-			sharedErrorHandler(req, err);
-		}
-
 		res.status(err.status || 500);
 		res.render('error', {
 			message: err.message,
@@ -1119,10 +1091,6 @@ if (expressApp.get("env") === "development" || expressApp.get("env") === "local"
 // production error handler
 // no stacktraces leaked to user
 expressApp.use(function(err, req, res, next) {
-	if (err) {
-		sharedErrorHandler(req, err);
-	}
-
 	res.status(err.status || 500);
 	res.render('error', {
 		message: err.message,
