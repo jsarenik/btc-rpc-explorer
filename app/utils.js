@@ -1301,14 +1301,6 @@ const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 const awaitPromises = async (promises) => {
 	const promiseResults = await Promise.allSettled(promises);
 
-	promiseResults.forEach(x => {
-		if (x.status == "rejected") {
-			if (x.reason) {
-				logError("awaitPromises_rejected", x.reason);
-			}
-		}
-	});
-
 	return promiseResults;
 };
 
