@@ -84,7 +84,7 @@ module.exports = {
 		"main":"Bitcoin",
 		"test":"Testnet",
 		"regtest":"Regtest",
-		"signet":"Signet",
+		"signet":"Playground",
 	},
 	demoSiteUrlsByNetwork: {
 		"main": "https://ex.bublina.eu.org",
