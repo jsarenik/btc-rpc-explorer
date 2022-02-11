@@ -546,12 +546,6 @@ function getRpcDataWithParams(request, verifyingConnection=false) {
 				callback();
 
 			} catch (err) {
-				err.userData = {request:request};
-
-				utils.logError("RpcError-002", err, {request:`${request.method}${request.parameters ? ("(" + JSON.stringify(request.parameters) + ")") : ""}`});
-
-				logStats(request.method, true, new Date().getTime() - startTime, false);
-
 				reject(err);
 
 				callback();
