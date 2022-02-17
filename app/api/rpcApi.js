@@ -489,12 +489,6 @@ function getRpcData(cmd, verifyingConnection=false) {
 				callback();
 
 			} catch (err) {
-				err.userData = {request:cmd};
-
-				utils.logError("RpcError-001", err, {request:cmd});
-
-				logStats(cmd, false, new Date().getTime() - startTime, false);
-
 				reject(err);
 
 				callback();
