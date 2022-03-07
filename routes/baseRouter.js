@@ -283,8 +283,6 @@ router.get("/", asyncHandler(async (req, res, next) => {
 		next();
 
 	} catch (err) {
-		utils.logError("238023hw87gddd", err);
-					
 		res.locals.userMessage = "Error building page: " + err;
 
 		await utils.timePromise("homepage.render", async () => {
@@ -335,8 +333,6 @@ router.get("/node-details", asyncHandler(async (req, res, next) => {
 		next();
 
 	} catch (err) {
-		utils.logError("32978efegdde", err);
-					
 		res.locals.userMessage = "Error building page: " + err;
 
 		await utils.timePromise("node-details.render", async () => {
@@ -358,8 +354,6 @@ router.get("/mempool-summary", asyncHandler(async (req, res, next) => {
 		next();
 
 	} catch (err) {
-		utils.logError("390824yw7e332", err);
-					
 		res.locals.userMessage = "Error building page: " + err;
 
 		res.render("mempool-summary");
@@ -411,8 +405,6 @@ router.get("/peers", asyncHandler(async (req, res, next) => {
 		next();
 
 	} catch (err) {
-		utils.logError("394rhweghe", err);
-					
 		res.locals.userMessage = "Error: " + err;
 
 		await utils.timePromise("peers.render", async () => {
@@ -639,8 +631,6 @@ router.get("/blocks", asyncHandler(async (req, res, next) => {
 		next();
 
 	} catch (err) {
-		res.locals.pageErrors.push(utils.logError("32974hrbfbvc", err));
-
 		res.locals.userMessage = "Error: " + err;
 
 		await utils.timePromise("blocks.render", async () => {
@@ -664,8 +654,6 @@ router.get("/mining-summary", asyncHandler(async (req, res, next) => {
 		next();
 
 	} catch (err) {
-		res.locals.pageErrors.push(utils.logError("39342heuges", err));
-
 		res.locals.userMessage = "Error: " + err;
 
 		res.render("mining-summary");
@@ -846,8 +834,6 @@ router.get("/xyzpub/:extendedPubkey", asyncHandler(async (req, res, next) => {
 		next();
 
 	} catch (err) {
-		res.locals.pageErrors.push(utils.logError("23r08uyhe7ege", err));
-
 		res.locals.userMessage = "Error: " + err;
 
 		await utils.timePromise("extended-public-key.render", async () => {
@@ -1137,8 +1123,6 @@ router.get("/block-height/:blockHeight", asyncHandler(async (req, res, next) => 
 	} catch (err) {
 		res.locals.userMessageMarkdown = `Failed loading block: height=**${blockHeight}**`;
 
-		res.locals.pageErrors.push(utils.logError("389wer07eghdd", err));
-
 		await utils.timePromise("block-height.render", async () => {
 			res.render("block");
 		});
@@ -1239,8 +1223,6 @@ router.get("/block/:blockHash", asyncHandler(async (req, res, next) => {
 	} catch (err) {
 		res.locals.userMessageMarkdown = `Failed to load block: **${blockHash}**`;
 
-		res.locals.pageErrors.push(utils.logError("32824yhr2973t3d", err));
-
 		await utils.timePromise("block.render", async () => {
 			res.render("block");
 		});
@@ -1258,8 +1240,6 @@ router.get("/predicted-blocks", asyncHandler(async (req, res, next) => {
 		next();
 
 	} catch (err) {
-		utils.logError("2083ryw0efghsu", err);
-					
 		res.locals.userMessage = "Error building page: " + err;
 
 		res.render("predicted-blocks");
@@ -1328,8 +1308,6 @@ router.get("/predicted-blocks-old", asyncHandler(async (req, res, next) => {
 		next();
 
 	} catch (err) {
-		res.locals.pageErrors.push(utils.logError("234efuewgew", err));
-
 		res.render("predicted-blocks");
 
 		next();
@@ -1361,8 +1339,6 @@ router.get("/block-analysis/:blockHashOrHeight", function(req, res, next) {
 			next();
 
 		}).catch(function(err) {
-			res.locals.pageErrors.push(utils.logError("943h84ehedr", err));
-
 			res.render("block-analysis");
 
 			next();
@@ -1501,8 +1477,6 @@ router.get("/tx/:transactionId", asyncHandler(async (req, res, next) => {
 
 		
 
-		utils.logError("1237y4ewssgt", err);
-
 		await utils.timePromise("tx.render", async () => {
 			res.render("transaction");
 		});
@@ -1600,20 +1574,6 @@ router.get("/address/:address", asyncHandler(async (req, res, next) => {
 			}
 		}
 		
-
-		if (res.locals.addressObj == null || addressEncoding == "unknown") {
-			if (base58Error) {
-				res.locals.pageErrors.push(utils.logError("AddressParseError-001", base58Error));
-			}
-
-			if (bech32Error) {
-				res.locals.pageErrors.push(utils.logError("AddressParseError-002", bech32Error));
-			}
-
-			if (bech32mError) {
-				res.locals.pageErrors.push(utils.logError("AddressParseError-003", bech32mError));
-			}
-		}
 
 		res.locals.addressEncoding = addressEncoding;
 
@@ -1781,10 +1741,6 @@ router.get("/address/:address", asyncHandler(async (req, res, next) => {
 
 		promises.push(utils.timePromise("address.qrcode.toDataURL", async () => {
 			qrcode.toDataURL(address, function(err, url) {
-				if (err) {
-					res.locals.pageErrors.push(utils.logError("93ygfew0ygf2gf2", err));
-				}
-
 				res.locals.addressQrCodeUrl = url;
 			});
 		}, perfResults));
@@ -1798,8 +1754,6 @@ router.get("/address/:address", asyncHandler(async (req, res, next) => {
 		next();
 
 	} catch (e) {
-		res.locals.pageErrors.push(utils.logError("2108hs0gsdfe", e, {address:address}));
-
 		res.locals.userMessageMarkdown = `Failed to load address: **${address}**`;
 
 		await utils.timePromise("address.render", async () => {
@@ -2022,8 +1976,6 @@ router.get("/rpc-browser", asyncHandler(async (req, res, next) => {
 					//next();
 
 				} catch (err) {
-					res.locals.pageErrors.push(utils.logError("23roewuhfdghe", err, {method:req.query.method, params:argValues}));
-
 					res.locals.methodResult = {error:("" + err)};
 
 					//res.render("rpc-browser");
@@ -2041,8 +1993,6 @@ router.get("/rpc-browser", asyncHandler(async (req, res, next) => {
 			}
 		}
 	} catch (err) {
-		res.locals.pageErrors.push(utils.logError("23ewyf0weee", err, {method:method, params:argValues}));
-		
 		res.locals.userMessage = "Error loading help content: " + err;
 	}
 
@@ -2144,8 +2094,6 @@ router.get("/mempool-transactions", asyncHandler(async (req, res, next) => {
 		next();
 
 	} catch (err) {
-		utils.logError("3297gfsdyde3q", err);
-					
 		res.locals.userMessage = "Error building page: " + err;
 
 		await utils.timePromise("mempool-transactions.render", async () => {
@@ -2341,8 +2289,6 @@ router.get("/bitcoin.pdf", function(req, res, next) {
 		res.send(Buffer.alloc(hexArray.length, hexArray, "hex"));
 	}).catch(function(err) {
 		res.locals.userMessageMarkdown = `Failed to load transaction outputs: txid=**${whitepaperTxid}**`;
-
-		res.locals.pageErrors.push(utils.logError("432907twhgeyedg", err));
 
 		res.render("transaction");
 
