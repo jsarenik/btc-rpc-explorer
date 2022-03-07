@@ -68,7 +68,7 @@ html(lang="en")
 							span.fw-light Bitcoin Explorer
 
 				if (false && config.demoSite)
-					- var networkNameMap = {"main": "Mainnet", "test": "Testnet", "signet": "Signet"};
+					- var networkNameMap = {"main": "Mainnet", "signet": "Signet", "test": "Testnet"};
 					span.badge.bg-primary(title=`This is a public demo, but this tool is designed to be installed and run by all Bitcoiners...<br/><i>Don't Trust, Verify</i>!`, data-bs-toggle="tooltip", data-bs-html="true")
 						span Public Demo
 						
@@ -101,7 +101,7 @@ html(lang="en")
 									div.dropdown-menu.dropdown-menu-end.shadow(aria-label="Demo Sites")
 										span.dropdown-header Public Demo Sites
 
-										- var demoSites = ["main", "test", "signet"];
+										- var demoSites = ["main", "signet", "test"];
 										
 										each demoSite in demoSites
 											a.dropdown-item(href=coinConfig.demoSiteUrlsByNetwork[demoSite])
@@ -307,7 +307,7 @@ html(lang="en")
 									+copyTextButton("http://lwjbesjxjpolo73nrtmhsnvxhfjxuqm7fookvr75hiph5vdwui2ucmyd.onion")
 									
 									div.mt-2
-										- var demoSites = ["main", "test", "signet"];
+										- var demoSites = ["main", "signet", "test"];
 										
 										each demoSite in demoSites
 											a.me-2(href=coinConfig.demoSiteUrlsByNetwork[demoSite], title=coinConfig.siteTitlesByNetwork[demoSite], data-bs-toggle="tooltip")
