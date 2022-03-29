@@ -698,7 +698,6 @@ async function refreshExchangeRates() {
 					debugLog("Unable to get gold exchange rate data");
 				}
 			} catch (err) {
-				logError("34082yt78yewewe", err);
 			}
 		}
 	}
