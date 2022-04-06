@@ -128,7 +128,6 @@ block content
 block endOfBody
 	script.
 		$(document).ready(function() {
-			$('#queryinput').focus();
 			$.get("./snippet/next-block", function(data) {
 				$("#index-next-block").html(data);
 				enableTooltipsAndPopovers();
