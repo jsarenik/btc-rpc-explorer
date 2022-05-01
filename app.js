@@ -97,14 +97,6 @@ const markdown = require("markdown-it")();
 const v8 = require("v8");
 var compression = require("compression");
 
-const appUtils = require("@janoside/app-utils");
-const s3Utils = appUtils.s3Utils;
-
-let cdnS3Bucket = null;
-if (config.cdn.active) {
-	cdnS3Bucket = s3Utils.createBucket(config.cdn.s3Bucket, config.cdn.s3BucketPath);
-}
-
 require("./app/currencies.js");
 
 const package_json = require('./package.json');
@@ -790,65 +782,6 @@ expressApp.onStartup = async () => {
 		debugLog(`Starting ${global.coinConfig.ticker} RPC Explorer, v${global.appVersion} at http://${config.host}:${config.port}${config.baseUrl}`);
 
 		expressApp.continueStartup();
-	}
-
-	if (config.cdn.active && config.cdn.s3Bucket) {
-		debugLog(`Configuring CDN assets; uploading ${cdnItems.length} assets to S3...`);
-
-		const s3Path = (filepath) => { return `${global.cacheId}/${filepath}`; }
-
-		const uploadedItems = [];
-		const existingItems = [];
-		const errorItems = [];
-
-		const uploadAssetIfNeeded = async (filepath, contentType, encoding) => {
-			try {
-				let absoluteFilepath = path.join(process.cwd(), "public", filepath);
-				let s3path = s3Path(filepath);
-				
-				const existingAsset = await cdnS3Bucket.get(s3path);
-
-				if (existingAsset) {
-					existingItems.push(filepath);
-
-					//debugLog(`Asset ${filepath} already in S3, skipping upload.`);
-
-				} else {
-					let fileData = fs.readFileSync(absoluteFilepath, {encoding: encoding, flag:'r'});
-					let fileBuffer = Buffer.from(fileData, encoding);
-
-					let options = {
-						"ContentType": contentType,
-						"CacheControl": "max-age=315360000"
-					};
-
-					await cdnS3Bucket.put(fileBuffer, s3path, options);
-
-					uploadedItems.push(filepath);
-
-					//debugLog(`Uploaded ${filepath} to S3.`);
-				}
-			} catch (e) {
-				errorItems.push(filepath);
-
-				debugErrorLog(`Error uploading asset to S3: ${JSON.stringify(filepath)}`, e);
-			}
-		};
-
-		const promises = [];
-		for (let i = 0; i < cdnItems.length; i++) {
-			let item = cdnItems[i];
-
-			let filepath = item[0];
-			let contentType = item[1];
-			let encoding = item[2];
-
-			promises.push(uploadAssetIfNeeded(filepath, contentType, encoding));
-		}
-
-		await utils.awaitPromises(promises);
-
-		debugLog(`Done uploading assets to S3:\n\tAlready present: ${existingItems.length}\n\tNewly uploaded: ${uploadedItems.length}\n\tError items: ${errorItems.length}`);
 	}
 }
 
