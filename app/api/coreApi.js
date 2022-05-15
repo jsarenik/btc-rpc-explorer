@@ -185,13 +185,9 @@ function tryCacheThenRpcApi(cache, cacheKey, cacheMaxAge, rpcApiFunction, cacheC
 				finallyFunc();
 
 			} catch (e) {
-				utils.logError("823hredhee", e);
-
 				reject(e);
 			}
 		}).catch(function(err) {
-			utils.logError("nds9fc2eg621tf3", err, {cacheKey:cacheKey});
-
 			finallyFunc();
 		});
 	});
@@ -307,7 +303,6 @@ function getUtxoSetSummary(useCoinStatsIndexIfAvailable=true, useCacheIfAvailabl
 					utxoSetFileCache.writeJson(utxoSetSummary);
 					
 				} catch (e) {
-					utils.logError("h32uheifehues", e);
 				}
 
 				return utxoSetSummary;
@@ -1301,9 +1296,6 @@ function buildMiningSummary(statusId, startBlock, endBlock, statusFunc) {
 							callback();
 
 						} catch (e) {
-							utils.logError("430835hre", e);
-
-
 							markItemsDone(3 - itemsDone);
 
 							// resolve anyway
@@ -1368,8 +1360,6 @@ function buildMiningSummary(statusId, startBlock, endBlock, statusFunc) {
 			resolve(summary);
 
 		} catch (err) {
-			utils.logError("208yrwregud9e3", err);
-
 			reject(err);
 		}
 	});
@@ -1426,8 +1416,6 @@ function getCachedMempoolTxSummaries() {
 			resolve(results);
 
 		} catch (err) {
-			utils.logError("asodfuhou33", err);
-
 			reject(err);
 		}
 	});
@@ -1497,9 +1485,6 @@ function getMempoolTxSummaries(allTxids, statusId, statusFunc) {
 							resolve();
 
 						} catch (e) {
-							utils.logError("31297rg34edwe", e);
-
-
 							doneCount++;
 							statusUpdate();
 
@@ -1530,14 +1515,11 @@ function getMempoolTxSummaries(allTxids, statusId, statusFunc) {
 				mempoolTxFileCache.writeJson(mempoolTxSummaryCache);
 				
 			} catch (e) {
-				utils.logError("h32uheifehues", e);
 			}
 
 			resolve(results);
 
 		} catch (err) {
-			utils.logError("asodfuhou33", err);
-
 			reject(err);
 		}
 	});
@@ -1855,8 +1837,6 @@ function buildMempoolSummary(statusId, ageBuckets, sizeBuckets, statusFunc) {
 			resolve(summary);
 
 		} catch (err) {
-			utils.logError("23947ryfuedge", err);
-
 			reject(err);
 		}
 	});
@@ -2079,8 +2059,6 @@ function buildPredictedBlocks(statusId, statusFunc) {
 			resolve(blocks);
 
 		} catch (err) {
-			utils.logError("23947ryfuedge", err);
-
 			reject(err);
 		}
 	});

@@ -129,7 +129,6 @@ const statsProcessFunction = (name, stats) => {
 		axios.post(process.env.STATS_API_URL, data)
 		.then(res => { /*console.log(res.data);*/ })
 		.catch(error => {
-			utils.logError("38974wrg9w7dsgfe", error);
 		});
 	}
 };
@@ -281,8 +280,6 @@ function loadMiningPoolConfigs() {
 
 	fs.readdir(miningPoolsConfigDir, function(err, files) {
 		if (err) {
-			utils.logError("3ufhwehe", err, {configDir:miningPoolsConfigDir, desc:"Unable to scan directory"});
-
 			return;
 		}
 
@@ -317,7 +314,6 @@ async function getSourcecodeProjectMetadata() {
 		global.sourcecodeProjectMetadata = response.data;
 
 	} catch (err) {
-		utils.logError("3208fh3ew7eghfg", err);
 		}
 }
 
@@ -326,7 +322,6 @@ function loadChangelog() {
 	
 	fs.readFile(path.join(__dirname, filename), 'utf8', function(err, data) {
 		if (err) {
-			utils.logError("2379gsd7sgd334", err);
 
 		} else {
 			global.changelogMarkdown = data;
@@ -338,7 +333,6 @@ function loadChangelog() {
 	
 	fs.readFile(path.join(__dirname, filename), 'utf8', function(err, data) {
 		if (err) {
-			utils.logError("ouqhuwey723", err);
 
 		} else {
 			global.apiChangelogMarkdown = data;
@@ -412,7 +406,6 @@ function verifyRpcConnection() {
 			onRpcConnectionVerified(getnetworkinfo, getblockchaininfo);
 
 		}).catch(function(err) {
-			utils.logError("32ugegdfsde", err);
 		});
 	}
 }
@@ -467,7 +460,6 @@ async function onRpcConnectionVerified(getnetworkinfo, getblockchaininfo) {
 		// short-circuit: force all RPC calls to pass their version checks - this will likely lead to errors / instability / unexpected results
 		global.btcNodeSemver = "1000.1000.0"
 
-		debugErrorLog(`Unable to parse node version string: ${getnetworkinfo.subversion} - RPC versioning will likely be unreliable. Is your node a version of Bitcoin Core?`);
 	}
 	
 	debugLog(`RPC Connected: version=${getnetworkinfo.version} subversion=${getnetworkinfo.subversion}, parsedVersion(used for RPC versioning)=${global.btcNodeSemver}, protocolversion=${getnetworkinfo.protocolversion}, chain=${getblockchaininfo.chain}, services=${services}`);
@@ -607,7 +599,6 @@ async function assessTxindexAvailability() {
 			debugLog("txindex check: unavailable");
 		}
 	} catch (e) {
-		utils.logError("o2328ryw8wsde", e);
 
 		var retryTime = parseInt(Math.min(15 * 60 * 1000, 1000 * 10 * Math.pow(2, txindexCheckCount)));
 		txindexCheckCount++;
@@ -764,12 +755,8 @@ expressApp.onStartup = async () => {
 
 
 		} catch (err) {
-			utils.logError("3fehge9ee", err, {desc:"Error accessing git repo"});
 
 			global.cacheId = global.appVersion;
-			debugLog(`Error getting sourcecode version, continuing to use default cacheId '${global.cacheId}'`);
-
-			debugLog(`Starting ${global.coinConfig.ticker} RPC Explorer, v${global.appVersion} (code: unknown commit) at http://${config.host}:${config.port}${config.baseUrl}`);
 		}
 		
 		expressApp.continueStartup();
@@ -823,7 +810,6 @@ expressApp.continueStartup = function() {
 	if (config.addressApi) {
 		var supportedAddressApis = addressApi.getSupportedAddressApis();
 		if (!supportedAddressApis.includes(config.addressApi)) {
-			utils.logError("32907ghsd0ge", `Unrecognized value for BTCEXP_ADDRESS_API: '${config.addressApi}'. Valid options are: ${supportedAddressApis}`);
 		}
 
 		if (config.addressApi == "electrum" || config.addressApi == "electrumx") {
@@ -832,10 +818,8 @@ expressApp.continueStartup = function() {
 					global.electrumAddressApi = electrumAddressApi;
 					
 				}).catch(function(err) {
-					utils.logError("31207ugf4e0fed", err, {electrumServers:config.electrumServers});
 				});
 			} else {
-				utils.logError("327hs0gde", "You must set the 'BTCEXP_ELECTRUM_SERVERS' environment variable when BTCEXP_ADDRESS_API=electrum.");
 			}
 		}
 	}
