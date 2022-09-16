@@ -46,8 +46,6 @@ function getAddressDetails(address, scriptPubkey, sort, limit, offset) {
 			resolve({addressDetails:result});
 
 		} catch (err) {
-			utils.logError("308dhew3w83", err);
-
 			reject(err);
 		}
 	});
