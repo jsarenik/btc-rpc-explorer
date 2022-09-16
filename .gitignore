@@ -61,3 +61,5 @@ typings/
 cache/
 
 *.css.map
+*.gz
+*.br
