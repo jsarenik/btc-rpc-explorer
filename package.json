@@ -12,8 +12,8 @@
 		"css-light-debug": "sass --style expanded --source-map scss ./public/scss/light.scss ./public/style/light.css",
 		"css-dark-debug": "sass --style expanded --source-map scss ./public/scss/dark.scss ./public/style/dark.css",
 		"css-debug": "npm-run-all css-light-debug css-dark-debug",
-		"css-light": "sass --style compressed ./public/scss/light.scss ./public/style/light.css",
-		"css-dark": "sass --style compressed ./public/scss/dark.scss ./public/style/dark.css",
+		"css-light": "sass --style compressed --source-map-urls relative ./public/scss/light.scss ./public/style/light.css",
+		"css-dark": "sass --style compressed --source-map-urls relative ./public/scss/dark.scss ./public/style/dark.css",
 		"css": "npm-run-all css-light css-dark"
 	},
 	"keywords": [

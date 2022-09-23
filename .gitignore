@@ -60,6 +60,5 @@ typings/
 # cache dir
 cache/
 
-*.css.map
 *.gz
 *.br
